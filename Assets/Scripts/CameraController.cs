@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        cameraHome = transform.position;
         _camera = Camera.main;
+        cameraHome = _camera.transform.position;
     }
 
     void Update()

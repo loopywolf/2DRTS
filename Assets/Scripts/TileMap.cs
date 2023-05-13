@@ -9,14 +9,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TileMap : MonoBehaviour
 {
-
-
-    [SerializeField] float tileSize = 1f;
+    [SerializeField] float tileSize = 1.25f;
     [SerializeField] int height;
     [SerializeField] int width;
+    [SerializeField] List<GameObject> tileList = new List<GameObject>();
 
     //Temp variables
     [SerializeField] TileScriptableObject tile;
+    [SerializeField] Sprite texture;
 
 
     void Update()
@@ -40,6 +40,10 @@ public class TileMap : MonoBehaviour
 
     void GenerateMap()
     {
+        if(tileList.Count > 0)
+        {
+            ClearTileMap();
+        }
         for (int x = 0; x < height; x++)
         {
             for (int y = 0; y < width; y++)
@@ -66,8 +70,12 @@ public class TileMap : MonoBehaviour
 
     void CreateTile(int xLocation, int yLocation)
     {
+        //Can be updated with prefab if warrented
         GameObject newTile = new("Tile_" + xLocation.ToString() + "_" + yLocation.ToString());
         newTile.transform.parent = transform;
-        newTile.transform.position = new Vector3(xLocation * tileSize, yLocation * tileSize, 0f);
+        newTile.transform.position = new Vector3(xLocation * tileSize + (tileSize * .5f) - (tileSize * height * .5f), yLocation * tileSize + (tileSize * .5f) - (tileSize * width * .5f), 0f);
+        SpriteRenderer assignTexture = newTile.AddComponent<SpriteRenderer>();
+        assignTexture.sprite = texture;
+        tileList.Add(newTile);
     }
 }

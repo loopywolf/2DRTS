@@ -44,9 +44,9 @@ public class TileMap : MonoBehaviour
         {
             ClearTileMap();
         }
-        for (int x = 0; x < height; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < width; y++)
+            for (int y = 0; y < height; y++)
             {
                 CreateTile(x, y);
             }
@@ -73,7 +73,7 @@ public class TileMap : MonoBehaviour
         //Can be updated with prefab if warrented
         GameObject newTile = new("Tile_" + xLocation.ToString() + "_" + yLocation.ToString());
         newTile.transform.parent = transform;
-        newTile.transform.position = new Vector3(xLocation * tileSize + (tileSize * .5f) - (tileSize * height * .5f), yLocation * tileSize + (tileSize * .5f) - (tileSize * width * .5f), 0f);
+        newTile.transform.position = new Vector3(xLocation * tileSize + (tileSize * .5f) - (tileSize * width * .5f), yLocation * tileSize + (tileSize * .5f) - (tileSize * height * .5f), 0f);
         SpriteRenderer assignTexture = newTile.AddComponent<SpriteRenderer>();
         assignTexture.sprite = texture;
         tileList.Add(newTile);

@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEditor;
 
 
-[CustomEditor(typeof(TileMap))]
+[CustomEditor(typeof(TileMapGenerator))]
 public class TileMapEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        TileMap tileMap = (TileMap)target;
+        TileMapGenerator tileMap = (TileMapGenerator)target;
         if (GUILayout.Button("Generate Tile Map"))
         {
             tileMap.Generate();

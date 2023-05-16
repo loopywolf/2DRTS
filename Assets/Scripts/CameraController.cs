@@ -6,6 +6,9 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] float cameraScrollSpeed = 1.5f;
     [SerializeField] int pixelEdgeLimit = 25;
+    [SerializeField] float cameraMinZoom = 3f;
+    [SerializeField] float cameraMaxZoom = 10f;
+
 
     Camera _camera;
     Vector3 cameraHome;
@@ -42,6 +45,6 @@ public class CameraController : MonoBehaviour
         {
             _camera.transform.position = _camera.transform.position + Vector3.down * cameraScrollSpeed * Time.deltaTime;
         }
-
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize + -Input.GetAxis("Mouse ScrollWheel") * cameraScrollSpeed, cameraMinZoom, cameraMaxZoom);
     }
 }

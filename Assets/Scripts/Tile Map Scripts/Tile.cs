@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    public int gCost;
+    public int hCost;
+    public int fCost;
+
+    public Tile previousTile;
+    
     [SerializeField] List<Tile> neighbors = new List<Tile>();
     [SerializeField] float travelWeight = 1f;
     [SerializeField] int tileX;
@@ -15,9 +21,24 @@ public class Tile : MonoBehaviour
         tileY = yLocation;
     }
 
+    public void SetFCost()
+    {
+        fCost = gCost + hCost;
+    }
+
     public int[] GetTilePosition()
     {
         return new int[] {tileX, tileY};
+    }
+
+    public List<Tile> GetNeighbors()
+    {
+        return neighbors;
+    }
+
+    public float GetWeight()
+    {
+        return travelWeight;
     }
 
     public void ConfigureNeighbors(List<Tile> tileList)

@@ -12,6 +12,8 @@ public class PathFinding : MonoBehaviour
     
     public List<Tile> FindPath(Tile startTile, Tile endTile)
     {
+        openTiles.Clear();
+        closedTiles.Clear();
         startTile.previousTile = null;
         startTile.gCost = 0;
         startTile.hCost = CalculateDistanceCost(startTile, endTile);

@@ -10,7 +10,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 fromPos = new Vector3 (0, 0, 0);
     Vector3 toPos = new Vector3 (0, 0, 0);
     float moveTime = 0f;
-    float movementTime = 1f;
+    float movementTime = .5f;
     void Start()
     {
         transform.position = new Vector3(currentTile.transform.position.x, currentTile.transform.position.y, transform.position.z);

@@ -23438,6 +23438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1213394839}
   - component: {fileID: 1213394840}
+  - component: {fileID: 1213394841}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -23453,7 +23454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213394838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.625, y: 0, z: 0}
+  m_LocalPosition: {x: -0.625, y: -1.24, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23491,6 +23492,20 @@ PolygonCollider2D:
       - {x: -0.53443736, y: -0.7023215}
       - {x: 0.4277421, y: -0.7023214}
       - {x: 0.453144, y: 0.07784337}
+--- !u!114 &1213394841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213394838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9890c9e946c70904989948cfaf9f48c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTile: {fileID: 164986172}
+  movementList: []
 --- !u!1 &1229684732
 GameObject:
   m_ObjectHideFlags: 0
@@ -29744,7 +29759,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   a: {fileID: 1628681123}
   b: {fileID: 284791907}
+  cam: {fileID: 1553280536}
   currentSelected: {fileID: 0}
+  map: {fileID: 1790098155}
+  tiles: []
 --- !u!1 &1558242267
 GameObject:
   m_ObjectHideFlags: 0

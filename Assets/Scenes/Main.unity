@@ -7437,7 +7437,7 @@ MonoBehaviour:
   - {fileID: 48379720}
   - {fileID: 725039348}
   - {fileID: 655970955}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 8
 --- !u!212 &380814935
@@ -11068,7 +11068,7 @@ MonoBehaviour:
   - {fileID: 725039348}
   - {fileID: 655970955}
   - {fileID: 601592685}
-  travelWeight: 1
+  travelWeight: 3
   tileX: 6
   tileY: 9
 --- !u!212 &580320093
@@ -11112,7 +11112,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 246474dbf77d4e3408bc22f046a28b08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5240d898651583439bc4c2009252ad6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -13987,7 +13987,7 @@ MonoBehaviour:
   - {fileID: 655970955}
   - {fileID: 601592685}
   - {fileID: 1137526325}
-  travelWeight: 1
+  travelWeight: 3
   tileX: 6
   tileY: 10
 --- !u!212 &696745539
@@ -14031,7 +14031,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 246474dbf77d4e3408bc22f046a28b08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5240d898651583439bc4c2009252ad6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -15793,7 +15793,7 @@ MonoBehaviour:
   - {fileID: 601592685}
   - {fileID: 1137526325}
   - {fileID: 255884375}
-  travelWeight: 1
+  travelWeight: 3
   tileX: 6
   tileY: 11
 --- !u!212 &778799535
@@ -15837,7 +15837,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 246474dbf77d4e3408bc22f046a28b08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5240d898651583439bc4c2009252ad6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -18301,7 +18301,7 @@ MonoBehaviour:
   - {fileID: 16572147}
   - {fileID: 294912497}
   - {fileID: 39802612}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 3
 --- !u!212 &938774597
@@ -23192,7 +23192,7 @@ MonoBehaviour:
   - {fileID: 1137526325}
   - {fileID: 255884375}
   - {fileID: 1935598351}
-  travelWeight: 1
+  travelWeight: 3
   tileX: 6
   tileY: 12
 --- !u!212 &1210028519
@@ -23236,7 +23236,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 246474dbf77d4e3408bc22f046a28b08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5240d898651583439bc4c2009252ad6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -23967,7 +23967,7 @@ MonoBehaviour:
   - {fileID: 2023549671}
   - {fileID: 16572147}
   - {fileID: 294912497}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 2
 --- !u!212 &1239996535
@@ -25498,7 +25498,7 @@ MonoBehaviour:
   - {fileID: 1778313866}
   - {fileID: 9225161}
   - {fileID: 2023549671}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 0
 --- !u!212 &1325218903
@@ -29757,8 +29757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e2d467641d8164aa5e2c06bc2412ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a: {fileID: 1628681123}
-  b: {fileID: 284791907}
   cam: {fileID: 1553280536}
   currentSelected: {fileID: 0}
   map: {fileID: 1790098155}
@@ -33644,7 +33642,7 @@ MonoBehaviour:
   - {fileID: 2111673477}
   - {fileID: 48379720}
   - {fileID: 725039348}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 7
 --- !u!212 &1684407249
@@ -35321,7 +35319,7 @@ MonoBehaviour:
   - {fileID: 9225161}
   - {fileID: 2023549671}
   - {fileID: 16572147}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 1
 --- !u!212 &1778313867
@@ -40039,7 +40037,7 @@ MonoBehaviour:
   - {fileID: 280822968}
   - {fileID: 2111673477}
   - {fileID: 48379720}
-  travelWeight: 2
+  travelWeight: 3
   tileX: 6
   tileY: 6
 --- !u!212 &1979784310

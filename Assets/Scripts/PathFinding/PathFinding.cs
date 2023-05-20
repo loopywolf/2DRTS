@@ -14,10 +14,7 @@ public class PathFinding : MonoBehaviour
     {
         openTiles.Clear();
         closedTiles.Clear();
-        startTile.previousTile = null;
-        startTile.gCost = 0;
-        startTile.hCost = CalculateDistanceCost(startTile, endTile);
-        startTile.SetFCost();
+        SetCalculationCosts( startTile, 0, null, endTile);
         openTiles.Add(startTile);
         
         while(openTiles.Count > 0)
@@ -31,19 +28,25 @@ public class PathFinding : MonoBehaviour
             {
                 if (closedTiles.Contains(neighbor) || neighbor.GetWeight() > 50f) continue;
                 
-                int calcGCost = currentTile.gCost + CalculateDistanceCost(currentTile, neighbor);
+                int calcGCost = currentTile.gCost + CalculateDistanceCost(neighbor, currentTile);
                 if(calcGCost < neighbor.gCost || !openTiles.Contains(neighbor))
                 {
-                    neighbor.previousTile = currentTile;
-                    neighbor.gCost = calcGCost;
-                    neighbor.hCost = CalculateDistanceCost(neighbor, endTile);
-                    neighbor.SetFCost();
-
+                    SetCalculationCosts(neighbor, calcGCost, currentTile, endTile);
+                    
                     if(!openTiles.Contains(neighbor)) openTiles.Add(neighbor);
                 }
             }
         }
         return null;
+    }
+
+    void SetCalculationCosts(Tile tile, int calcGCost, Tile currentTile, Tile endTile)
+    {
+        
+        tile.previousTile = currentTile;
+        tile.gCost = calcGCost;
+        tile.hCost = CalculateDistanceCost(tile, endTile);
+        tile.SetFCost();
     }
 
     List<Tile> CalculatePath(Tile endTile)
@@ -76,6 +79,6 @@ public class PathFinding : MonoBehaviour
         int xDistance = Mathf.Abs(a.GetTilePosition()[0] - b.GetTilePosition()[0]);
         int yDistance = Mathf.Abs(a.GetTilePosition()[1] - b.GetTilePosition()[1]);
         int remaining = Mathf.Abs(xDistance - yDistance);
-        return diagonalCost * Mathf.Min(xDistance, yDistance) + inLineCost * remaining;
+        return Mathf.RoundToInt((diagonalCost * Mathf.Min(xDistance, yDistance) + inLineCost * remaining) * a.GetWeight());
     }
 }

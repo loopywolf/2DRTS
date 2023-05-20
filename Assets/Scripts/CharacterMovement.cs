@@ -53,7 +53,7 @@ public class CharacterMovement : MonoBehaviour
             toPos = new Vector3(movementList[0].transform.position.x, movementList[0].transform.position.y, transform.position.z);
             moveTime = 0f;
         }
-        transform.position = Vector3.Lerp(fromPos, toPos, (moveTime / movementTime));
+        transform.position = Vector3.Lerp(fromPos, toPos, (moveTime / (movementTime * currentTile.GetWeight())));
         moveTime += Time.deltaTime;
     }
 }

@@ -36,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetMovementList(List<Tile> tiles)
     {
-        movementList = tiles;
+        movementList = new List<Tile>(tiles);
         fromPos = transform.position;
         toPos = new Vector3(movementList[0].transform.position.x, movementList[0].transform.position.y, transform.position.z);
 

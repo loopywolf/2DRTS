@@ -7,7 +7,8 @@ public class MouseSelection : MonoBehaviour
 {
     [SerializeField] Camera cam;
 
-    [SerializeField] GameObject currentSelected = null;
+
+    [SerializeField] List<GameObject> selectedUnits = new List<GameObject>();
     [SerializeField] TileMap map;
     [SerializeField] List<Tile> tiles = new List<Tile>();
     void Start()
@@ -18,7 +19,7 @@ public class MouseSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftShift))
         {
             RaycastHit2D[] hit  = Physics2D.RaycastAll(new Vector2(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
             if(hit.Length > 0)
@@ -26,25 +27,39 @@ public class MouseSelection : MonoBehaviour
                 Debug.Log("Hit does not = null\n" + hit.Length.ToString());
                 if (hit[0].transform.CompareTag("Player"))
                 {
-                    Debug.Log("Player clicked");
-                    currentSelected = hit[0].transform.gameObject;
+                    selectedUnits.Clear();
+                    selectedUnits.Add(hit[0].transform.gameObject);
                 } 
                 if(hit[0].transform.CompareTag("Tile"))
                 {
                     Debug.Log("Clicked Tile");
-                    if(currentSelected != null)
+                    if(selectedUnits.Count > 0)
                     {
-                        tiles.Clear();
-                        tiles = map.GetComponent<PathFinding>().FindPath(currentSelected.GetComponent<CharacterMovement>().CurrentTile(), hit[0].transform.gameObject.GetComponent<Tile>());
-                        currentSelected.GetComponent<CharacterMovement>().SetMovementList(tiles);
+                        foreach (GameObject unit in selectedUnits)
+                        {
+                            tiles.Clear();
+                            tiles = map.GetComponent<PathFinding>().FindPath(unit.GetComponent<CharacterMovement>().CurrentTile(), hit[0].transform.gameObject.GetComponent<Tile>());
+                            unit.GetComponent<CharacterMovement>().SetMovementList(tiles);
+                        }
                     }
                 }
             }
         }
 
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift))
+        {
+            RaycastHit2D[] hit = Physics2D.RaycastAll(new Vector2(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
+            if (hit.Length > 0)
+            {
+                if (hit[0].transform.CompareTag("Player"))
+                {
+                    selectedUnits.Add(hit[0].transform.gameObject);
+                }
+            }
+        }
         if (Input.GetMouseButtonDown(1))
         {
-            currentSelected = null;
+            selectedUnits.Clear();
         }
     }
 }

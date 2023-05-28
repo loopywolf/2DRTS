@@ -10,4 +10,6 @@ public class Unit
     int[,] buildingSize;
     Cost cost;
     string owner;
+    float sightRange;
+    float engagementRange;
 }

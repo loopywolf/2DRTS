@@ -10,4 +10,5 @@ public class Building
     int[,] buildingSize;
     Cost cost;
     string owner;
+    float sightRange;
 }

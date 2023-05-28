@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResourceDisplay : MonoBehaviour
+public class RTSResourceDisplay : MonoBehaviour
 {
     [SerializeField] Image image;
     [SerializeField] Text text;

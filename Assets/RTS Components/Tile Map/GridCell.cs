@@ -45,6 +45,6 @@ public class GridCell
 
     public override string ToString()
     {
-        return cellName;
+        return cellName + "\n" + cellUncovered.ToString();
     }
 }

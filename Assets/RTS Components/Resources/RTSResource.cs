@@ -10,7 +10,7 @@ public class RTSResource : MonoBehaviour
     [SerializeField] Image icon;
     [SerializeField] int amount;
 
-    [SerializeField] ResourceDisplay display;
+    [SerializeField] RTSResourceDisplay display;
 
    public void SetResource(string name, string desc, Image icon, int amount)
     {

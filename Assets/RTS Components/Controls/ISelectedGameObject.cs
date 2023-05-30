@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISelectedGameObject
+public interface ISelectableGameObject
 {
-    void SelectedGameObject(GameObject selectedGameObject);
+    void Select();
 
-    void DeselectSelectedGameObject();
+    void Deselect();
 }
 

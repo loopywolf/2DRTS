@@ -6,4 +6,6 @@ using UnityEngine;
 public interface IHoverOverObject
 {
     public void HoverOver();
+
+    public void HoverExit();
 }

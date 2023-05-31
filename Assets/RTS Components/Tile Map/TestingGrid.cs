@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestingGrid : MonoBehaviour
+public class TestingGrid : MonoBehaviour, IGrid
 {
     private Grid<GridCell> grid;
+
+    public Vector3 SnapToGrid(Vector3 mousePosition)
+    {
+        return grid.SnapToGridLocation(mousePosition);
+    }
 
     // Start is called before the first frame update
     void Start()

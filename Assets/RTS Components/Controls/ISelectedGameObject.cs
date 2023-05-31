@@ -3,8 +3,8 @@ using UnityEngine;
 
 public interface ISelectableGameObject
 {
-    void Select();
+    public void SelectGameObject();
 
-    void Deselect();
+    public void DeselectGameObject();
 }
 

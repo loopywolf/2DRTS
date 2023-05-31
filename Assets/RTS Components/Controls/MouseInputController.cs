@@ -5,11 +5,17 @@ using UnityEngine.EventSystems;
 
 public class MouseInputController : MonoBehaviour
 {
+    public enum ActionType {addition, subtraction, replacement, assignment};
+    ActionType actionType;
     [SerializeField] GameObject currentHoverGameObject = null;
     [SerializeField] GameObject currentSelectedGameObject = null;
+    [SerializeField] GameObject cellMarker;
 
     void Update()
     {
+        HighlightCell();
+
+
         RaycastHit2D[] hit = Physics2D.RaycastAll(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
         Debug.Log(hit.Length.ToString());
         if (hit.Length > 0)
@@ -37,13 +43,18 @@ public class MouseInputController : MonoBehaviour
         }
     }
 
+    void HighlightCell()
+    {
+        transform.position = GameObject.FindObjectOfType<TestingGrid>().GetComponent<IGrid>().SnapToGrid(RTSUtilities.GetMouseWorldPosition());
+    }
+
     void SelectGameObject(GameObject selectedObject)
     {
         DeselectGameObject();
         if(selectedObject != null)
         {
             currentSelectedGameObject = selectedObject;
-            currentSelectedGameObject.GetComponent<ISelectableGameObject>()?.Select();
+            currentSelectedGameObject.GetComponent<ISelectableGameObject>()?.SelectGameObject();
         }
     }
 
@@ -51,7 +62,7 @@ public class MouseInputController : MonoBehaviour
     {
         if (currentSelectedGameObject != null)
         {
-            currentSelectedGameObject.GetComponent<ISelectableGameObject>()?.Deselect();
+            currentSelectedGameObject.GetComponent<ISelectableGameObject>()?.DeselectGameObject();
             currentSelectedGameObject = null;
         }
     }

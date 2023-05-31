@@ -23,12 +23,12 @@ public class TestingHover : MonoBehaviour, IHoverOverObject, ISelectableGameObje
         spriteRend.color = Color.white;
     }
 
-    public void Select()
+    public void SelectGameObject()
     {
         spriteRend.color = Color.green;
     }
 
-    public void Deselect()
+    public void DeselectGameObject()
     {
         spriteRend.color = Color.white;
     }

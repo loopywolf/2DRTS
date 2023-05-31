@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveVelocity : MonoBehaviour
+public class MoveVelocity : MonoBehaviour, IMoveVelocity
 {
     [SerializeField] private float moveSpeed;
 
     private Vector3 velocityVector;
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rigid2D;
 
     private void Awake()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigid2D = GetComponent<Rigidbody2D>();
 
     }
 
@@ -22,6 +22,6 @@ public class MoveVelocity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody2D.velocity = velocityVector * moveSpeed;
+        rigid2D.velocity = velocityVector * moveSpeed;
     }
 }

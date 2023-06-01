@@ -10,11 +10,13 @@ public class MoveTransformVelocity : MonoBehaviour, IMoveVelocity
 
     public void SetVelocity(Vector3 velocityVector)
     {
-        this.velocityVector = velocityVector;
+        this.velocityVector += velocityVector;
+        this.velocityVector = this.velocityVector.normalized;
     }
 
     private void FixedUpdate()
     {
         transform.position += velocityVector * moveSpeed * Time.deltaTime;
+        velocityVector = Vector3.zero;
     }
 }

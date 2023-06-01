@@ -17,7 +17,6 @@ public class MouseInputController : MonoBehaviour
 
 
         RaycastHit2D[] hit = Physics2D.RaycastAll(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
-        Debug.Log(hit.Length.ToString());
         if (hit.Length > 0)
         {
             if (currentHoverGameObject != hit[0].transform.gameObject)
@@ -45,7 +44,7 @@ public class MouseInputController : MonoBehaviour
 
     void HighlightCell()
     {
-        transform.position = GameObject.FindObjectOfType<TestingGrid>().GetComponent<IGrid>().SnapToGrid(RTSUtilities.GetMouseWorldPosition());
+        transform.position = GameObject.FindObjectOfType<RTSSceneManager>().GetComponent<IGrid>().SnapToGrid(RTSUtilities.GetMouseWorldPosition());
     }
 
     void SelectGameObject(GameObject selectedObject)

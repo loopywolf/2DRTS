@@ -5,36 +5,90 @@ using UnityEngine;
 
 public class BuildMenu : MonoBehaviour
 {
+    public static BuildMenu thisBuildMenu;
     [SerializeField] GameObject cellMarker;
     [SerializeField] IGrid iGrid;
     [SerializeField] bool buildEnabled = false;
 
-    [SerializeField] int width;
-    [SerializeField] int height;
+    [SerializeField] GameObject buildMenu;
+
     // Start is called before the first frame update
     void Start()
     {
+        if(thisBuildMenu == null)
+        {
+            thisBuildMenu = this;
+        } else
+        {
+            Destroy(this);
+        }
         iGrid = GameObject.FindObjectOfType<RTSSceneManager>().GetComponent<IGrid>();
+        buildMenu = GameObject.Find("Build Menu");
+        buildMenu.SetActive(buildEnabled);
         cellMarker.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            buildEnabled = !buildEnabled;
-            cellMarker.SetActive(buildEnabled);
-            cellMarker.transform.localScale = new Vector3 (width, height, 1);
-        }
-        if (buildEnabled)
-        {
-            HighlightCell();
-        }        
+        OpenBuildMenu();
+
+        SnapBuildingToGrid();
+
+        BuildingPlacement();
+
+        CancelBuilding();
     }
 
-    void HighlightCell()
+    public void BuildingSelected(int width, int height, string buildingName)
     {
-        transform.position = iGrid.SnapToGrid(RTSUtilities.GetMouseWorldPosition());
+        buildMenu.SetActive(false);
+        SizeBuildingArray(width, height);
+        buildEnabled = true;
+    }
+
+    void OpenBuildMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            buildMenu.SetActive(!buildMenu.activeSelf);
+        }
+        
+    }
+    
+    void SizeBuildingArray(int width, int height)
+    {
+        cellMarker.transform.localScale = new Vector3(width, height, 1);
+    }
+
+    bool ValidateBuildLocation()
+    {
+        return false;
+    }
+
+    void BuildingPlacement()
+    {
+
+    }
+
+    void CancelBuilding()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            buildEnabled = false; 
+            buildMenu.SetActive(false);
+            cellMarker.SetActive(buildEnabled);
+        }
+    }
+
+    void SnapBuildingToGrid()
+    {
+        if (buildEnabled)
+        {
+            cellMarker.SetActive(buildEnabled);
+            transform.position = iGrid.SnapToGrid(RTSUtilities.GetMouseWorldPosition());
+
+            //need to check gird with ValidateBuildLocation for is 
+        }
     }
 }

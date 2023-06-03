@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Building 
+public class Building
 {
     string buildingName;
-    Image icon;
+    Sprite icon;
     int[,] buildingSize;
     Cost cost;
     string owner;
     float sightRange;
+
+
 }

@@ -9,13 +9,10 @@ public class MouseInputController : MonoBehaviour
     ActionType actionType;
     [SerializeField] GameObject currentHoverGameObject = null;
     [SerializeField] GameObject currentSelectedGameObject = null;
-    [SerializeField] GameObject cellMarker;
+    
 
     void Update()
     {
-        HighlightCell();
-
-
         RaycastHit2D[] hit = Physics2D.RaycastAll(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
         if (hit.Length > 0)
         {
@@ -40,11 +37,6 @@ public class MouseInputController : MonoBehaviour
         {
             DeselectGameObject();
         }
-    }
-
-    void HighlightCell()
-    {
-        transform.position = GameObject.FindObjectOfType<RTSSceneManager>().GetComponent<IGrid>().SnapToGrid(RTSUtilities.GetMouseWorldPosition());
     }
 
     void SelectGameObject(GameObject selectedObject)

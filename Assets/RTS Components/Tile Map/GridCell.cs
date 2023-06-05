@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridCell
+public class GridCell : MonoBehaviour
 {
-    int width;
-    int height;
+    int x;
+    int y;
     string cellName;
     bool cellUncovered;
     bool cellInSightRange;
 
     public GridCell(int x, int y)
     {
-        this.width = x;
-        this.height = y;
+        this.x = x;
+        this.y = y;
         this.cellName = "Cell_" + x + "_" + y;
         this.cellUncovered = false;
         this.cellInSightRange = false;
@@ -21,6 +21,12 @@ public class GridCell
     public void CellUncovered()
     {
         cellUncovered = true;
+    }
+
+    public void SetPosition(int x, int y)
+    {
+        this.x = x;
+        this.y = y;            
     }
 
     public void CellUncovered(bool value)

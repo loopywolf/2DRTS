@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TileMap
   - Tile
+  - RTSSceneManager
   layers:
   - Default
   - TransparentFX

@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using System.Collections.Generic;
 
-public class Grid<TGridObject> 
+public class CustomGrid<TGridObject> 
 {
     [SerializeField] bool showDebug = false;
 
@@ -14,14 +12,16 @@ public class Grid<TGridObject>
     private Vector3 originPosition;
     private TGridObject[,] gridArray;
     private TextMesh[,] debugTextArray;
+    private Transform parent;
 
-    public Grid(int width, int height, float cellSize, bool showDebug, Vector3 originPosition, Func<int, int, TGridObject> createGridObject)
+    public CustomGrid(int width, int height, float cellSize, bool showDebug, Transform parent, Vector3 originPosition, Func<int, int, TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
         this.originPosition = originPosition;
         this.showDebug = showDebug;
+        this.parent = parent;
 
         gridArray = new TGridObject[width, height];
 
@@ -39,17 +39,29 @@ public class Grid<TGridObject>
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
-                    debugTextArray[x, y] = RTSUtilities.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 80, Color.white, TextAnchor.MiddleCenter);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+                    debugTextArray[x, y] = RTSUtilities.CreateWorldText(gridArray[x, y]?.ToString(), parent, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 50, Color.white, TextAnchor.MiddleCenter);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 1f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 1f);
                 }
-                Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+                Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 1f);
+                Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 1f);
             }
         }
     }
 
-    public int GetWidth()
+    public bool BuildPlotOpen(int[] buildValues)
+    {
+        for(int x = buildValues[0]; x < buildValues[2]; x++)
+        {
+            for(int y = buildValues[1]; y < buildValues[3]; y++)
+            {
+                Debug.Log("Build Area: " + x.ToString() + " " + y.ToString());
+            }
+        }
+        return true;
+    }
+
+        public int GetWidth()
     {
         return width;
     }

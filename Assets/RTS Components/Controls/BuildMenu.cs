@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BuildMenu : MonoBehaviour
@@ -9,6 +6,7 @@ public class BuildMenu : MonoBehaviour
     [SerializeField] GameObject cellMarker;
     [SerializeField] IGrid iGrid;
     [SerializeField] bool buildEnabled = false;
+    [SerializeField] bool isBuilding = false;
 
     [SerializeField] GameObject buildMenu;
 
@@ -31,13 +29,14 @@ public class BuildMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        BuildingPlacement();
+
         OpenBuildMenu();
 
         SnapBuildingToGrid();
 
-        BuildingPlacement();
-
         CancelBuilding();
+
     }
 
     public void BuildingSelected(int width, int height, string buildingName)
@@ -59,16 +58,31 @@ public class BuildMenu : MonoBehaviour
     void SizeBuildingArray(int width, int height)
     {
         cellMarker.transform.localScale = new Vector3(width, height, 1);
+        isBuilding = true;
     }
 
     bool ValidateBuildLocation()
     {
-        return false;
+        int[] buildValue = new int[4];
+        buildValue[0] = (int) cellMarker.transform.position.x;
+        buildValue[1] = (int) cellMarker.transform.position.y;
+        buildValue[2] = (int) cellMarker.transform.localScale.x;
+        buildValue[3] = (int) cellMarker.transform.localScale.y;
+        Debug.Log("Build Values " + buildValue[0].ToString() + "," + buildValue[1].ToString() + "," + buildValue[2].ToString() + "," + buildValue[3].ToString());
+        return iGrid.BuildPlotOpen(buildValue);
     }
 
     void BuildingPlacement()
     {
+        if (Input.GetMouseButton(0) && isBuilding)
+        {
+            if (ValidateBuildLocation())
+            {
+                Debug.Log("Place Building!");
+                CancelBuilding();
+            }
 
+        }
     }
 
     void CancelBuilding()

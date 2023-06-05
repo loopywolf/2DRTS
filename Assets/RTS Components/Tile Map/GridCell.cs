@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class GridCell : MonoBehaviour
+
+
+public class GridCell
 {
     int x;
     int y;
     string cellName;
     bool cellUncovered;
     bool cellInSightRange;
+    bool cellTraversable;
+    bool cellBuildable;
+    bool cellOccupied;
 
     public GridCell(int x, int y)
     {
@@ -17,6 +19,9 @@ public class GridCell : MonoBehaviour
         this.cellName = "Cell_" + x + "_" + y;
         this.cellUncovered = false;
         this.cellInSightRange = false;
+        this.cellTraversable = false;
+        this.cellBuildable = false;
+        this.cellOccupied = false;
     }
     public void CellUncovered()
     {
@@ -49,8 +54,18 @@ public class GridCell : MonoBehaviour
         return cellUncovered;
     }
 
+    public bool IsCellBuildable()
+    {
+        return cellBuildable;
+    }
+
+    public void CellBuildablility(bool cellBuildable)
+    {
+        this.cellBuildable = cellBuildable;
+    }
+
     public override string ToString()
     {
-        return cellName + "\n" + cellUncovered.ToString();
+        return cellName + "\nCell explored: " + cellUncovered.ToString() + "\nCell visiable: " + cellInSightRange.ToString() + "\nCell traversable: " + cellTraversable.ToString() + "\nCell buildable: " + cellBuildable.ToString() + "\nCell Occupied: " + cellOccupied.ToString();
     }
 }

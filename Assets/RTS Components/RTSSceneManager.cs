@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,7 +8,7 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     [SerializeField] int height = 20;
     [SerializeField] float tileSize = 50f;
     [SerializeField] bool showDebug = false;
-    private Grid<GridCell> grid;
+    CustomGrid<GridCell> grid;
 
     [SerializeField] Sprite texture;
 
@@ -22,9 +20,37 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     // Start is called before the first frame update
     void Start()
     {
-        //grid = new Grid<GridCell>(width, height, tileSize, showDebug, new Vector3(10f, 0), (int x, int y) => new GridCell(x, y));
+        grid = new CustomGrid<GridCell>(width, height, tileSize, false, this.gameObject.transform, new Vector3(10f, 0), (int x, int y) => new GridCell(x, y));
+        if (grid == null)
+        {
+            Debug.Log("Grid == null");
+        } else
+        {
+            Debug.Log("Grid is present");
+        }
     }
 
+
+    void Update()
+    {
+        ShowDebug();
+    }
+
+
+    void ShowDebug()
+    {
+        if (Input.GetKeyDown(KeyCode.Tilde))
+        {
+            showDebug = !showDebug;
+            //grid.ShowDebug(showDebug);
+        }
+    }
+
+    public bool BuildPlotOpen(int[] buildValues){
+
+
+        return grid.BuildPlotOpen(buildValues);
+    }
 
     public void Generate()
     {
@@ -45,14 +71,8 @@ public class RTSSceneManager : MonoBehaviour, IGrid
             ClearTileMap();
         }
 
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                CreateTile(x, y);
-            }
-        }
-        //tileMap.GetComponent<TileMap>().ConfigureTileMapNeighbors();
+        grid = new CustomGrid<GridCell>(width, height, tileSize, showDebug, this.gameObject.transform, new Vector3(10f, 0), (int x, int y) => new GridCell(x, y));
+
     }
 
     public void ClearTileMap()
@@ -70,18 +90,4 @@ public class RTSSceneManager : MonoBehaviour, IGrid
             Debug.Log("No children to remove.");
         }
     }
-    
-    void CreateTile(int xLocation, int yLocation)
-    {
-        //Can be updated with prefab if warrented
-        GameObject newTile = new("Tile_" + xLocation.ToString() + "_" + yLocation.ToString());
-        newTile.transform.parent = gameObject.transform;
-        newTile.transform.position = new Vector3(xLocation * tileSize + (tileSize * .5f) - (tileSize * width * .5f), yLocation * tileSize + (tileSize * .5f) - (tileSize * height * .5f), 0f);
-        SpriteRenderer assignTexture = newTile.AddComponent<SpriteRenderer>();
-        assignTexture.sprite = texture;
-        GridCell tileComp = newTile.AddComponent<GridCell>();
-        tileComp.SetPosition(xLocation, yLocation);
-    }
-
-
 }

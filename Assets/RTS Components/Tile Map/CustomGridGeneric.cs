@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class CustomGrid<GridCell> 
+public class CustomGridGeneric<TGridObject> 
 {
     [SerializeField] bool showDebug = false;
 
@@ -10,11 +10,11 @@ public class CustomGrid<GridCell>
     private int height;
     private float cellSize;
     private Vector3 originPosition;
-    private GridCell[,] gridArray;
+    private TGridObject[,] gridArray;
     private TextMesh[,] debugTextArray;
     private Transform parent;
 
-    public CustomGrid(int width, int height, float cellSize, bool showDebug, Transform parent, Vector3 originPosition)
+    public CustomGridGeneric(int width, int height, float cellSize, bool showDebug, Transform parent, Vector3 originPosition, Func<int, int, TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
@@ -23,20 +23,16 @@ public class CustomGrid<GridCell>
         this.showDebug = showDebug;
         this.parent = parent;
 
-        gridArray = new GridCell[width, height];
+        gridArray = new TGridObject[width, height];
 
-        for (int x = 0; x < gridArray.GetLength(0); x++)
+        for(int x =0; x < gridArray.GetLength(0); x++)
         {
-            for (int y = 0; y < gridArray.GetLength(1); y++)
+            for( int y = 0; y < gridArray.GetLength(1); y++)
             {
-                //GameObject cell = new GameObject("Cell_" + x + "_" + y);
-                //GridCell gridCell = cell.AddComponent<GridCell>();
-                //gridCell.SetupGridCell(x, y);
-                //gridArray[x, y] = gridCell;
+                gridArray[x, y] = createGridObject(x, y);
             }
         }
-        if (showDebug)
-        {
+        if (showDebug) { 
             debugTextArray = new TextMesh[width, height];
 
             for (int x = 0; x < gridArray.GetLength(0); x++)
@@ -55,29 +51,24 @@ public class CustomGrid<GridCell>
 
     public bool BuildPlotOpen(int[] buildValues)
     {
-        for (int w = 0; w < buildValues[2]; w++)
+        for(int x = buildValues[0]; x < buildValues[2]; x++)
         {
-            for (int h = 0; h < buildValues[3]; h++)
+            for(int y = buildValues[1]; y < buildValues[3]; y++)
             {
-                int x, y;
-                GetXY(new Vector3(buildValues[0], buildValues[1], 0), out x, out y);
-                GridCell checkCell = GetGridObject(w + x, h + y);
-                Debug.Log("Build Area: " + (w + x).ToString() + " " + (h + y).ToString());
-                //if (checkCell.IsCellBuildable() == false) { return false; }
-
+                Debug.Log("Build Area: " + x.ToString() + " " + y.ToString());
             }
         }
         return true;
     }
 
-    public int GetWidth()
+        public int GetWidth()
     {
         return width;
     }
 
-    public int GetHeight()
-    {
-        return height;
+    public int GetHeight() 
+    { 
+        return height; 
     }
 
     private Vector3 GetWorldPosition(int x, int y)
@@ -91,7 +82,7 @@ public class CustomGrid<GridCell>
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
 
-    public void SetGridObject(int x, int y, GridCell value)
+    public void SetGridObject(int x, int y, TGridObject value)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -100,7 +91,7 @@ public class CustomGrid<GridCell>
         }
     }
 
-    public void SetGridObject(Vector3 worldPosition, GridCell value)
+    public void SetGridObject(Vector3 worldPosition, TGridObject value)
     {
         GetXY(worldPosition, out int x, out int y);
         SetGridObject(x, y, value);
@@ -112,19 +103,18 @@ public class CustomGrid<GridCell>
         return GetWorldPosition(x, y);
     }
 
-    public GridCell GetGridObject(int x, int y)
+    public TGridObject GetGridObject(int x, int y)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
             return gridArray[x, y];
-        }
-        else
+        } else
         {
-            return default(GridCell);
+            return default(TGridObject);
         }
     }
 
-    public GridCell GetGridObject(Vector3 worldPosition)
+    public TGridObject GetGridObject(Vector3 worldPosition)
     {
         GetXY(worldPosition, out int x, out int y);
         return GetGridObject(x, y);

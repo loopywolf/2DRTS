@@ -886,6 +886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellMarker: {fileID: 172088157}
   buildEnabled: 0
+  isBuilding: 0
   buildMenu: {fileID: 0}
 --- !u!1 &524656578
 GameObject:
@@ -2252,8 +2253,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 50
   height: 50
-  tileSize: 50
-  showDebug: 0
+  cellSize: 50
+  showDebug: 1
+  originPosition: {x: 0, y: 0, z: 0}
   texture: {fileID: 0}
 --- !u!1 &2090140713
 GameObject:

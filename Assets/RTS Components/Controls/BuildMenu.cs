@@ -74,7 +74,7 @@ public class BuildMenu : MonoBehaviour
 
     void BuildingPlacement()
     {
-        if (Input.GetMouseButton(0) && isBuilding)
+        if (Input.GetMouseButtonDown(0) && isBuilding)
         {
             if (ValidateBuildLocation())
             {

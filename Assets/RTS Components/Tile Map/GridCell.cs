@@ -1,6 +1,7 @@
 
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridCell : MonoBehaviour
 {
@@ -84,6 +85,12 @@ public class GridCell : MonoBehaviour
         return cellBuildable;
     }
 
+    public void SetBuilding()
+    {
+        cellOccupied = true;
+        UpdateText();
+    }
+
     public bool IsOccupied()
     {
         return cellOccupied;
@@ -92,6 +99,19 @@ public class GridCell : MonoBehaviour
     public void CellBuildablility(bool cellBuildable)
     {
         this.cellBuildable = cellBuildable;
+    }
+
+    void UpdateText()
+    {
+        debugTextMesh.GetComponent<TextMesh>().text = ToString();
+        if (cellOccupied)
+        {
+            debugTextMesh.GetComponent<TextMesh>().color = Color.red;
+        } else
+        {
+            debugTextMesh.GetComponent<TextMesh>().color = Color.white;
+        }
+        
     }
 
     public override string ToString()

@@ -15,6 +15,10 @@ public class RTSSceneManagerEditor : Editor
         {
             rtsSceneManager.ClearTileMap();
         }
+        if(GUILayout.Button("Check Grid Exist"))
+        {
+            rtsSceneManager.CheckGridExist();
+        }
 
         DrawDefaultInspector();
 

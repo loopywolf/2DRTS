@@ -9,6 +9,8 @@ public class BuildMenu : MonoBehaviour
     [SerializeField] bool isBuilding = false;
 
     [SerializeField] GameObject buildMenu;
+    [SerializeField] Sprite sprite;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,8 +41,9 @@ public class BuildMenu : MonoBehaviour
 
     }
 
-    public void BuildingSelected(int width, int height, string buildingName)
+    public void BuildingSelected(int width, int height, string buildingName, Sprite sprite)
     {
+        this.sprite = sprite;
         buildMenu.SetActive(false);
         SizeBuildingArray(width, height);
         buildEnabled = true;
@@ -58,17 +61,14 @@ public class BuildMenu : MonoBehaviour
     void SizeBuildingArray(int width, int height)
     {
         cellMarker.transform.localScale = new Vector3(width, height, 1);
+        cellMarker.transform.Find("Building Sprite").GetComponent<SpriteRenderer>().sprite = sprite;
         isBuilding = true;
     }
 
-    bool ValidateBuildLocation()
+    bool ValidateBuildLocation(int[] buildValue)
     {
-        int[] buildValue = new int[4];
-        buildValue[0] = (int) cellMarker.transform.position.x;
-        buildValue[1] = (int) cellMarker.transform.position.y;
-        buildValue[2] = (int) cellMarker.transform.localScale.x;
-        buildValue[3] = (int) cellMarker.transform.localScale.y;
-        Debug.Log("Build Values " + buildValue[0].ToString() + "," + buildValue[1].ToString() + "," + buildValue[2].ToString() + "," + buildValue[3].ToString());
+        
+        
         return iGrid.BuildPlotOpen(buildValue);
     }
 
@@ -76,23 +76,46 @@ public class BuildMenu : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && isBuilding)
         {
-            if (ValidateBuildLocation())
+            int[] buildValue = PlotSetup();
+            if (ValidateBuildLocation(buildValue))
             {
                 Debug.Log("Place Building!");
-                CancelBuilding();
+                SpawnBuilding(buildValue);
+                SetCancelBuilding();
             }
 
         }
+    }
+
+    int[] PlotSetup()
+    {
+        int[] buildValue = new int[4];
+        buildValue[0] = (int)cellMarker.transform.position.x;
+        buildValue[1] = (int)cellMarker.transform.position.y;
+        buildValue[2] = (int)cellMarker.transform.localScale.x;
+        buildValue[3] = (int)cellMarker.transform.localScale.y;
+        Debug.Log("Build Values " + buildValue[0].ToString() + "," + buildValue[1].ToString() + "," + buildValue[2].ToString() + "," + buildValue[3].ToString());
+        return buildValue;
+    }
+
+    void SpawnBuilding(int[] buildValue)
+    {
+        iGrid.PlaceBuilding(buildValue);
     }
 
     void CancelBuilding()
     {
         if (Input.GetMouseButton(1))
         {
-            buildEnabled = false; 
-            buildMenu.SetActive(false);
-            cellMarker.SetActive(buildEnabled);
+            SetCancelBuilding();
         }
+    }
+
+    void SetCancelBuilding()
+    {
+        buildEnabled = false;
+        buildMenu.SetActive(false);
+        cellMarker.SetActive(buildEnabled);
     }
 
     void SnapBuildingToGrid()

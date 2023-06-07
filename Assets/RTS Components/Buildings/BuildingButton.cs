@@ -8,6 +8,7 @@ public class BuildingButton : MonoBehaviour
     [SerializeField] string buildingName;
     [SerializeField] int width;
     [SerializeField] int height;
+    [SerializeField] Sprite sprite;
 
     //Cost cost;
     //string owner;
@@ -21,6 +22,6 @@ public class BuildingButton : MonoBehaviour
 
     public void BuildingSelected()
     {
-        BuildMenu.thisBuildMenu.BuildingSelected(width, height, buildingName);
+        BuildMenu.thisBuildMenu.BuildingSelected(width, height, buildingName, sprite);
     }
 }

@@ -77,10 +77,17 @@ public class RTSUtilities : MonoBehaviour
                 cell.transform.parent = parent;
                 GridCell gridCell = cell.AddComponent<GridCell>();
                 gridCell.SetupGridCell(x, y);
-                gridCell.SetDebugTextMesh(RTSUtilities.CreateWorldText(gridCell.ToString(), cell.transform, (new Vector3(x, y) * cellSize + originPosition) + new Vector3(cellSize, cellSize) * .5f, 50, Color.white, TextAnchor.MiddleCenter).gameObject);
+                gridCell.SetDebugTextMesh(RTSUtilities.CreateWorldText(gridCell.ToString(), cell.transform, new Vector3(1,1) * (cellSize * .5f), 50, Color.white, TextAnchor.MiddleCenter).gameObject);
                 gridCell.ShowDebug(showDebug);
                 gridArray[x, y] = gridCell;
+                if(showDebug) Debug.DrawLine(new Vector3(0, y * cellSize, 1), new Vector3(width * cellSize, y * cellSize, 1), Color.white, 100f);
             }
+            if (showDebug) Debug.DrawLine(new Vector3(x * cellSize, 0, 1), new Vector3(x * cellSize, height * cellSize ,1), Color.white, 100f);
+        }
+        if (showDebug)
+        {
+            Debug.DrawLine(new Vector3(0, height * cellSize, 1), new Vector3(width * cellSize, height * cellSize, 1), Color.white, 100f);
+            Debug.DrawLine(new Vector3(width * cellSize, 0, 1), new Vector3(width * cellSize, height * cellSize, 1), Color.white, 100f);
         }
         return gridArray;
     }

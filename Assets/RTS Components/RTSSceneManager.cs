@@ -21,10 +21,11 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     // Start is called before the first frame update
     void Start()
     {
-        grid = RTSUtilities.CustomGrid(width, height, cellSize, showDebug, this.gameObject.transform, originPosition);
-        if (grid == null)
+        
+        if (transform.childCount == 0)
         {
             Debug.Log("Grid == null");
+            grid = RTSUtilities.CustomGrid(width, height, cellSize, showDebug, this.gameObject.transform, originPosition);
         } else
         {
             Debug.Log("Grid is present");
@@ -37,6 +38,17 @@ public class RTSSceneManager : MonoBehaviour, IGrid
         ShowDebug();
     }
 
+    public void CheckGridExist()
+    {
+        if (transform.childCount == 0)
+        {
+            Debug.Log("Grid == null");
+        }
+        else
+        {
+            Debug.Log("Grid is present");
+        }
+    }
 
     void ShowDebug()
     {
@@ -60,6 +72,20 @@ public class RTSSceneManager : MonoBehaviour, IGrid
             }
         }
         return true;
+    }
+
+    public void PlaceBuilding(int[] buildValues)
+    {
+        for (int w = 0; w < buildValues[2]; w++)
+        {
+            for (int h = 0; h < buildValues[3]; h++)
+            {
+                int x, y;
+                GetXY(new Vector3(buildValues[0], buildValues[1], 0), out x, out y);
+                GridCell buildCell = GetGridObject(w + x, h + y);
+                buildCell.SetBuilding();
+            }
+        }
     }
 
     public GridCell GetGridObject(int x, int y)
@@ -98,9 +124,7 @@ public class RTSSceneManager : MonoBehaviour, IGrid
         {
             ClearTileMap();
         }
-
         grid = RTSUtilities.CustomGrid(width, height, cellSize, showDebug, this.gameObject.transform, originPosition);
-
     }
 
     public void ClearTileMap()

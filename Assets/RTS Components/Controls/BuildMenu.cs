@@ -9,8 +9,10 @@ public class BuildMenu : MonoBehaviour
     [SerializeField] bool isBuilding = false;
 
     [SerializeField] GameObject buildMenu;
+    [SerializeField] GameObject tint;
     [SerializeField] Sprite sprite;
-
+    [SerializeField] Color green;
+    [SerializeField] Color red;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,8 @@ public class BuildMenu : MonoBehaviour
         OpenBuildMenu();
 
         SnapBuildingToGrid();
+
+        UpdateCellMarkerHighlight();
 
         CancelBuilding();
 
@@ -65,10 +69,20 @@ public class BuildMenu : MonoBehaviour
         isBuilding = true;
     }
 
+    void UpdateCellMarkerHighlight()
+    {
+        int[] buildValue = PlotSetup();
+        if (ValidateBuildLocation(buildValue))
+        {
+            tint.GetComponent<SpriteRenderer>().color = green;
+        } else
+        {
+            tint.GetComponent<SpriteRenderer>().color = red;
+        }
+    }
+
     bool ValidateBuildLocation(int[] buildValue)
     {
-        
-        
         return iGrid.BuildPlotOpen(buildValue);
     }
 
@@ -113,6 +127,7 @@ public class BuildMenu : MonoBehaviour
 
     void SetCancelBuilding()
     {
+        isBuilding = false; 
         buildEnabled = false;
         buildMenu.SetActive(false);
         cellMarker.SetActive(buildEnabled);

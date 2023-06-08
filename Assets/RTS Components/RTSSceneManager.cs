@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,7 +11,6 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     [SerializeField] bool showDebug = false;
     [SerializeField] Vector3 originPosition = Vector3.zero;
     [SerializeField] GridCell[,] grid;
-
     [SerializeField] Sprite texture;
 
     public Vector3 SnapToGrid(Vector3 mousePosition)

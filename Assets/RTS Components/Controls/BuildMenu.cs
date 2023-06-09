@@ -10,6 +10,7 @@ public class BuildMenu : MonoBehaviour
 
     [SerializeField] GameObject buildMenu;
     [SerializeField] GameObject tint;
+    [SerializeField] string buildingName;
     [SerializeField] Sprite sprite;
     [SerializeField] Color green;
     [SerializeField] Color red;
@@ -51,6 +52,7 @@ public class BuildMenu : MonoBehaviour
         buildMenu.SetActive(false);
         SizeBuildingArray(width, height);
         buildEnabled = true;
+        this.buildingName = buildingName;
     }
 
     void OpenBuildMenu()
@@ -95,10 +97,17 @@ public class BuildMenu : MonoBehaviour
             {
                 Debug.Log("Place Building!");
                 SpawnBuilding(buildValue);
+                PlaceBuildingOnLocation(buildValue);
                 SetCancelBuilding();
             }
 
         }
+    }
+    void PlaceBuildingOnLocation(int[] buildingValue)
+    {
+        GameObject buildingGO = new GameObject("Building " + buildingName);
+        Building buildComp = buildingGO.AddComponent<Building>();
+        buildComp.SetValues(buildingName, sprite, buildingValue, iGrid);
     }
 
     int[] PlotSetup()
@@ -139,8 +148,6 @@ public class BuildMenu : MonoBehaviour
         {
             cellMarker.SetActive(buildEnabled);
             transform.position = iGrid.SnapToGrid(RTSUtilities.GetMouseWorldPosition());
-
-            //need to check gird with ValidateBuildLocation for is 
         }
     }
 }

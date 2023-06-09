@@ -28,7 +28,15 @@ public class RTSSceneManager : MonoBehaviour, IGrid
             grid = RTSUtilities.CustomGrid(width, height, cellSize, showDebug, this.gameObject.transform, originPosition);
         } else
         {
+            grid = new GridCell[width, height];
             Debug.Log("Grid is present");
+            for (int x = 0; x < width; x++)
+            {
+                for(int y = 0; y < height; y++)
+                {
+                    grid[x, y] = GameObject.Find("Cell_" + x.ToString() + "_" + y.ToString()).GetComponent<GridCell>();
+                }
+            }
         }
     }
 

@@ -38,26 +38,38 @@ public class BuildingHoveAndSelect : MonoBehaviour, IHoverOverObject, ISelectabl
 
     public void SelectGameObject()
     {
-        isSelected = true;
-        UpdateSelected();
+        if (!BuildMenu.thisBuildMenu.IsBuilding())
+        {
+            isSelected = true;
+            UpdateSelected();
+        }
     }
 
     public void DeselectGameObject()
     {
-        isSelected = false;
-        UpdateSelected();
+        if (!BuildMenu.thisBuildMenu.IsBuilding())
+        {
+            isSelected = false;
+            UpdateSelected();
+        }
     }
 
     public void HoverOver()
     {
-        isHover = true;
-        UpdateSelected();
+        if (!BuildMenu.thisBuildMenu.IsBuilding())
+        {
+            isHover = true;
+            UpdateSelected();
+        }
     }
 
     public void HoverExit()
     {
-        isHover = false;
-        UpdateSelected();
+        if (!BuildMenu.thisBuildMenu.IsBuilding())
+        {
+            isHover = false;
+            UpdateSelected();
+        }
     }
 
     void UpdateSelected()

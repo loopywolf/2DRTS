@@ -3,6 +3,7 @@ using UnityEngine;
 public class BuildMenu : MonoBehaviour
 {
     public static BuildMenu thisBuildMenu;
+    //public static bool 
     [SerializeField] GameObject cellMarker;
     [SerializeField] IGrid iGrid;
     [SerializeField] bool buildEnabled = false;
@@ -44,6 +45,11 @@ public class BuildMenu : MonoBehaviour
 
         CancelBuilding();
 
+    }
+
+    public bool IsBuilding()
+    {
+        return isBuilding;
     }
 
     public void BuildingSelected(int width, int height, string buildingName, Sprite sprite)

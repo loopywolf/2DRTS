@@ -73,13 +73,17 @@ public class BuildMenu : MonoBehaviour
 
     void UpdateCellMarkerHighlight()
     {
-        int[] buildValue = PlotSetup();
-        if (ValidateBuildLocation(buildValue))
+        if (buildEnabled)
         {
-            tint.GetComponent<SpriteRenderer>().color = green;
-        } else
-        {
-            tint.GetComponent<SpriteRenderer>().color = red;
+            int[] buildValue = PlotSetup();
+            if (ValidateBuildLocation(buildValue))
+            {
+                tint.GetComponent<SpriteRenderer>().color = green;
+            }
+            else
+            {
+                tint.GetComponent<SpriteRenderer>().color = red;
+            }
         }
     }
 

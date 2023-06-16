@@ -114,7 +114,14 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     {
         int x, y;
         GetXY(mousePosition, out x, out y);
-        return grid[x, y];
+        if(x >= 0 && y >= 0 && x < width && y < height)
+        {
+            return grid[x, y];
+        } else
+        {
+            return null;
+        }
+        
     }
 
     private void GetXY(Vector3 worldPosition, out int x, out int y)

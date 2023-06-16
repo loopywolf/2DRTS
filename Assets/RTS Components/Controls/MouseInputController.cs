@@ -10,6 +10,7 @@ public class MouseInputController : MonoBehaviour
     [SerializeField] GameObject currentHoverGameObject = null;
     [SerializeField] GameObject currentSelectedGameObject = null;
     [SerializeField] RTSSceneManager iGrid;
+    
 
     private void Start()
     {
@@ -18,12 +19,12 @@ public class MouseInputController : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D[] hit = Physics2D.RaycastAll(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
         if (currentSelectedGameObject != null && Input.GetMouseButtonDown(0))
         {
-            currentSelectedGameObject.transform.parent.GetComponent<IMoveLocation>().MoveLocation(iGrid.GetGridObject(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+            MovePosition();
         }
-        
+
+        RaycastHit2D[] hit = Physics2D.RaycastAll(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), -Vector2.up, 0f);
         if (hit.Length > 0)
         {
             if (currentHoverGameObject != hit[0].transform.gameObject)
@@ -48,6 +49,12 @@ public class MouseInputController : MonoBehaviour
         {
             DeselectGameObject();
         }
+    }
+
+    void MovePosition()
+    {
+        GridCell gridCell = iGrid.GetGridObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        if (gridCell != null) currentSelectedGameObject.transform.parent.GetComponent<IMoveLocation>().MoveLocation(gridCell);
     }
 
     void SelectGameObject(GameObject selectedObject)

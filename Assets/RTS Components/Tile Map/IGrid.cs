@@ -7,4 +7,6 @@ public interface IGrid
     public bool BuildPlotOpen(int[] buildingValues);
 
     public void PlaceBuilding(int[] buildingValues);
+
+    public GridCell GetGridObject(int x, int y);
 }

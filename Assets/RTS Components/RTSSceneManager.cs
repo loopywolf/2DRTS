@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-
+[System.Serializable]
 public class RTSSceneManager : MonoBehaviour, IGrid
 {
     [SerializeField] int width = 20;
@@ -100,12 +100,21 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
+            Debug.Log(grid[x,y].name);
             return grid[x, y];
         }
         else
         {
+            Debug.Log("default");
             return default(GridCell);
         }
+    }
+
+    public GridCell GetGridObject(Vector3 mousePosition)
+    {
+        int x, y;
+        GetXY(mousePosition, out x, out y);
+        return grid[x, y];
     }
 
     private void GetXY(Vector3 worldPosition, out int x, out int y)

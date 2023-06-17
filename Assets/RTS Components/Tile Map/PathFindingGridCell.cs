@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathFindingGridCell : MonoBehaviour
 {
 
-    public static PathFindingGridCell Instance = new PathFindingGridCell();
+    public static PathFindingGridCell Instance;
     const int inLineCost = 10;
     const int diagonalCost = 14;
 

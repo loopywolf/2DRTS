@@ -1,7 +1,9 @@
 
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class GridCell : MonoBehaviour
 {
@@ -15,17 +17,28 @@ public class GridCell : MonoBehaviour
     [SerializeField] bool cellOccupied;
     [SerializeField] GameObject debugTextMesh;
 
-    /*public GridCell(int x, int y)
+    public GridCell previousTile;
+    public int gCost;
+    public int hCost;
+    public int fCost;
+    [SerializeField] float travelWeight = 1f;
+    [SerializeField] List<GridCell> neighbors;
+
+
+    public bool IsCellTraversable()
     {
-        this.x = x;
-        this.y = y;
-        this.cellName = "Cell_" + x + "_" + y;
-        this.cellUncovered = false;
-        this.cellInSightRange = false;
-        this.cellTraversable = false;
-        this.cellBuildable = false;
-        this.cellOccupied = false;
-    }*/
+        return cellTraversable;
+    }
+
+    public void SetFCost()
+    {
+        fCost = gCost + hCost;
+    }
+
+    public int[] GetTilePosition()
+    {
+        return new int[] { x, y};
+    }
 
     public void SetDebugTextMesh(GameObject textMesh)
     {
@@ -45,7 +58,7 @@ public class GridCell : MonoBehaviour
         this.cellName = "Cell_" + x + "_" + y;
         this.cellUncovered = false;
         this.cellInSightRange = false;
-        this.cellTraversable = false;
+        this.cellTraversable = true;
         this.cellBuildable = true;
         this.cellOccupied = false;
     }
@@ -88,7 +101,18 @@ public class GridCell : MonoBehaviour
     public void SetBuilding()
     {
         cellOccupied = true;
+        cellTraversable = false;
         UpdateText();
+    }
+
+    public float GetWeight()
+    {
+        return travelWeight;
+    }
+
+    public List<GridCell> GetNeighbors()
+    {
+        return neighbors;
     }
 
     public bool IsOccupied()
@@ -117,5 +141,26 @@ public class GridCell : MonoBehaviour
     public override string ToString()
     {
         return cellName + "\nCell explored: " + cellUncovered.ToString() + "\nCell visiable: " + cellInSightRange.ToString() + "\nCell traversable: " + cellTraversable.ToString() + "\nCell buildable: " + cellBuildable.ToString() + "\nCell Occupied: " + cellOccupied.ToString();
+    }
+
+    public void ConfigureNeighbors(List<GridCell> cellList)
+    {
+        for (int cell = 0; cell < cellList.Count; cell++)
+        {
+            int[] tilePosition = cellList[cell].GetComponent<GridCell>().GetTilePosition();
+            int neightborX = tilePosition[0];
+            int neightborY = tilePosition[1];
+            if (x == neightborX && (y == neightborY + 1 || y == neightborY - 1) || y == neightborY && (x == neightborX + 1 || x == neightborX - 1))
+            {
+                //These connections will be in line with the tile, and should have a value of travelWeight(default 1)
+                neighbors.Add(cellList[cell]);
+            }
+            if (x == neightborX + 1 && (y == neightborY + 1 || y == neightborY - 1) || x == neightborX - 1 && (y == neightborY + 1 || y == neightborY - 1))
+            {
+                //These connections are diagonal and should carry a slightly greater value then 1.5.
+                //Value slightly above 1.5 will prevent A* from creating a jagged tooth pattern. 
+                neighbors.Add(cellList[cell]);
+            }
+        }
     }
 }

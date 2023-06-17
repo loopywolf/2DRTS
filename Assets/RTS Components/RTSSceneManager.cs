@@ -12,6 +12,7 @@ public class RTSSceneManager : MonoBehaviour, IGrid
     [SerializeField] Vector3 originPosition = Vector3.zero;
     [SerializeField] GridCell[,] grid;
     [SerializeField] Sprite texture;
+    [SerializeField] List<GridCell> cells = new List<GridCell>();
 
     public Vector3 SnapToGrid(Vector3 mousePosition)
     {
@@ -26,6 +27,7 @@ public class RTSSceneManager : MonoBehaviour, IGrid
         {
             Debug.Log("Grid == null");
             grid = RTSUtilities.CustomGrid(width, height, cellSize, showDebug, this.gameObject.transform, originPosition);
+            ChildCells();
         } else
         {
             grid = new GridCell[width, height];
@@ -40,6 +42,25 @@ public class RTSSceneManager : MonoBehaviour, IGrid
         }
     }
 
+    void ChildCells()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<GridCell>() != null)
+            {
+                cells.Add(transform.GetChild(i).GetComponent<GridCell>());
+            }
+        }
+        SetCellNeighbors();
+    }
+
+    public void SetCellNeighbors()
+    {
+        foreach (GridCell cell in cells)
+        {
+            cell.ConfigureNeighbors(cells);
+        }
+    }
 
     void Update()
     {
@@ -110,10 +131,11 @@ public class RTSSceneManager : MonoBehaviour, IGrid
         }
     }
 
-    public GridCell GetGridObject(Vector3 mousePosition)
+    public GridCell GetGridObject(Vector3 coordinates)
     {
         int x, y;
-        GetXY(mousePosition, out x, out y);
+        GetXY(coordinates, out x, out y);
+        Debug.Log(x.ToString() + " " + y.ToString());
         if(x >= 0 && y >= 0 && x < width && y < height)
         {
             return grid[x, y];
@@ -149,6 +171,7 @@ public class RTSSceneManager : MonoBehaviour, IGrid
             ClearTileMap();
         }
         grid = RTSUtilities.CustomGrid(width, height, cellSize, showDebug, this.gameObject.transform, originPosition);
+        ChildCells();
     }
 
     public void ClearTileMap()
@@ -165,6 +188,7 @@ public class RTSSceneManager : MonoBehaviour, IGrid
         {
             Debug.Log("No children to remove.");
         }
+        cells = new List<GridCell>();
     }
 
     public Vector3 SnapToGridLocation(Vector3 mousePosition)

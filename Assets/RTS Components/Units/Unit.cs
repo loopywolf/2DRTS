@@ -12,24 +12,46 @@ public class Unit : MonoBehaviour, IMoveLocation
     string owner;
     float sightRange;
     float engagementRange;
-    [SerializeField] GridCell moveLocation;
+    float movementTime;
+    [SerializeField] List<GridCell> moveLocation;
+    [SerializeField] GridCell currentTile;
 
-    public void MoveLocation(GridCell gridCell)
+    void Start()
+    {
+        moveLocation = new List<GridCell>();
+        
+    }
+
+    public void MoveLocation(List<GridCell> gridCell)
     {
         moveLocation = gridCell;
     }
 
+    public GridCell GetCurrentTile()
+    {
+        return currentTile;
+    }
+
     public void Update()
     {
+        if(currentTile == null) currentTile = GameObject.FindObjectOfType<RTSSceneManager>().GetComponent<RTSSceneManager>().GetGridObject(transform.position);
         MoveUnit();
     }
 
     void MoveUnit()
     {
-        if(moveLocation != null)
+        if(moveLocation.Count > 0)
         {
-            transform.position = moveLocation.transform.position;
-            moveLocation = null;
+            if (transform.position == moveLocation[0].transform.position)
+            {
+                currentTile = moveLocation[0];
+                moveLocation.Remove(moveLocation[0]);
+                movementTime = 0f;
+            } else
+            {
+                transform.position = Vector3.Lerp(currentTile.transform.position, moveLocation[0].transform.position, movementTime * 5f);
+                movementTime += Time.deltaTime;
+            }
         }
     }
 }

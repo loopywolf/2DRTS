@@ -53,7 +53,10 @@ public class MouseInputController : MonoBehaviour
 
     void MovePosition()
     {
-        GridCell gridCell = iGrid.GetGridObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        List<GridCell> gridCell = new List<GridCell>();
+        GridCell startCell = currentSelectedGameObject.transform.parent.GetComponent<IMoveLocation>().GetCurrentTile();
+        GridCell endCell = iGrid.GetGridObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        gridCell = PathFindingGridCell.Instance.FindPath(startCell, endCell);
         if (gridCell != null) currentSelectedGameObject.transform.parent.GetComponent<IMoveLocation>().MoveLocation(gridCell);
     }
 
